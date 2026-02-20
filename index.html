@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Multiplication Range Calculator</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 40px;
+            transition: 0.3s;
+            background-color: #f4f4f4;
+            color: #000;
+        }
+
+        .dark {
+            background-color: #121212;
+            color: white;
+        }
+
+        .container {
+            padding: 30px;
+            border-radius: 10px;
+            width: 400px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            background: white;
+            transition: 0.3s;
+        }
+
+        .dark .container {
+            background: #1e1e1e;
+        }
+
+        input {
+            padding: 10px;
+            margin: 8px;
+            width: 80%;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 15px;
+            margin: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .primary {
+            background: #007BFF;
+            color: white;
+        }
+
+        .secondary {
+            background: #444;
+            color: white;
+        }
+
+        #result {
+            margin-top: 20px;
+            text-align: left;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .line {
+            padding: 4px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Multiplication Range Calculator</h2>
+
+    <input type="number" id="baseNumber" placeholder="Base Number"><br>
+    <input type="number" id="startRange" placeholder="Start Range"><br>
+    <input type="number" id="endRange" placeholder="End Range"><br>
+
+    <button class="primary" onclick="generateTable()">Generate</button>
+    <button class="secondary" onclick="toggleDarkMode()">Dark Mode</button>
+
+    <div id="result"></div>
+</div>
+
+<script>
+    function generateTable() {
+        let base = parseInt(document.getElementById("baseNumber").value);
+        let start = parseInt(document.getElementById("startRange").value);
+        let end = parseInt(document.getElementById("endRange").value);
+        let resultDiv = document.getElementById("result");
+
+        resultDiv.innerHTML = "";
+
+        if (isNaN(base) || isNaN(start) || isNaN(end)) {
+            resultDiv.innerHTML = "Enter valid numbers.";
+            return;
+        }
+
+        if (start > end) {
+            resultDiv.innerHTML = "Start must be ≤ End.";
+            return;
+        }
+
+        if (end - start > 5000) {
+            resultDiv.innerHTML = "Range too large. Max allowed range is 5000 numbers.";
+            return;
+        }
+
+        let fragment = document.createDocumentFragment();
+
+        for (let i = start; i <= end; i++) {
+            let line = document.createElement("div");
+            line.className = "line";
+            line.textContent = `${base} × ${i} = ${base * i}`;
+            fragment.appendChild(line);
+        }
+
+        resultDiv.appendChild(fragment);
+    }
+
+    function toggleDarkMode() {
+        document.body.classList.toggle("dark");
+    }
+</script>
+
+</body>
+</html>
